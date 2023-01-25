@@ -21,27 +21,35 @@ public class MediaRepository : IMediaRepository
         return await _context.Medias.AsNoTracking().FirstOrDefaultAsync(o => o.MediaId == mediaId);
     }
 
-    public async Task<IReadOnlyList<Media>> GetMediaListAsync()
+    public async Task<IReadOnlyList<Media>> GetMediaListAsync(int? mediaTypeId)
     {
-        return await _context.Medias.Include(o => o.MediaType).Include(o => o.WatchLists).AsNoTracking().ToListAsync();
+        if(mediaTypeId == null)
+            return await _context.Medias.Include(o => o.MediaType).Include(o => o.WatchLists).AsNoTracking().ToListAsync();
+        return await _context.Medias.Include(o => o.MediaType).Include(o => o.WatchLists).Where(o => o.MediaTypeId == mediaTypeId).AsNoTracking().ToListAsync();
     }
 
-    public async Task<IReadOnlyList<Media>> SearchMediaAsync(string? mediaTitle = "")
+    public async Task<IReadOnlyList<Media>> SearchMediaAsync(int? mediaTypeId, string? mediaTitle = "")
     {
         if (string.IsNullOrEmpty(mediaTitle))
 
+            return await GetMediaListAsync(mediaTypeId);
+            
+        if(mediaTypeId == null)
+        {
+            var mediaListQuery = from media in _context.Set<Media>()
+                join mediaType in _context.Set<MediaType>() on media.MediaTypeId equals mediaType.MediaTypeId
+                where EF.Functions.Like(media.MediaTitle, "%" + mediaTitle + "%")
+                select media;
+            return await mediaListQuery.ToListAsync();
+        }
 
-            return await _context.Medias.Include(o => o.MediaType).Include(o => o.WatchLists).AsNoTracking()
-                .ToListAsync();
-
-
-        var mediaListQuery = from media in _context.Set<Media>()
+        var mediaListQueryWithFilter = from media in _context.Set<Media>()
             join mediaType in _context.Set<MediaType>() on media.MediaTypeId equals mediaType.MediaTypeId
-            where EF.Functions.Like(media.MediaTitle, "%" + mediaTitle + "%")
+            where EF.Functions.Like(media.MediaTitle, "%" + mediaTitle + "%") && media.MediaTypeId == mediaTypeId
             select media;
 
 
-        return await mediaListQuery.ToListAsync();
+        return await mediaListQueryWithFilter.ToListAsync();
     }
 
     public async Task<OperationResult> AddMediaAsync(int mediaTypeId, string mediaTitle, string pictureUrl)
