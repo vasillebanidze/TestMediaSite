@@ -1,0 +1,14 @@
+Install-Package Microsoft.EntityFrameworkCore
+
+Install-Package Microsoft.EntityFrameworkCore.SqlServer
+
+Install-Package Microsoft.EntityFrameworkCore.Design
+
+Install-Package FluentValidation.AspNetCore
+
+
+
+
+MIGRATION
+
+dotnet ef migrations add InitialCreate -p CORE -s WEB_API -o Migrations

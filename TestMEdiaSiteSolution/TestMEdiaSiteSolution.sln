@@ -9,11 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REPOSITORY", "REPOSITORY\RE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB_API", "WEB_API\WEB_API.csproj", "{4D02AC4D-F7CC-4F9A-8BF5-E916748B5DEE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DOCUMENTS", "DOCUMENTS", "{34FE9F77-34E7-4A92-A8B4-83214FACD155}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\Users\Admin\Desktop\Scripts.txt = ..\..\Users\Admin\Desktop\Scripts.txt
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

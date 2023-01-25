@@ -1,4 +1,18 @@
+using CORE.DbContexts;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+// ADD DB CONTEXT
+// ============================================================================
+builder.Services.AddDbContext<MediaContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+
+
 
 // Add services to the container.
 
