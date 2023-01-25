@@ -1,0 +1,24 @@
+
+<div class="input-group mb-3 m-3">
+  <input type="text" class="form-control" placeholder="მიუთითეთ ფილმის დასახელება" aria-label="Recipient's username" aria-describedby="button-addon2" [(ngModel)]="searchInput">
+  <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="getMediaList()">ძიება</button>
+  <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<div class="btn-group mb-3 m-3" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-warning" (click)="setFilter(0)">ყველა</button>
+  <button type="button" class="btn btn-warning" (click)="setFilter(1)">ფილმები</button>
+  <button type="button" class="btn btn-warning"(click)="setFilter(2)">სერიალები</button>
+  <button type="button" class="btn btn-warning"(click)="setFilter(3)">ანიმაციური ფილმები</button>
+</div>
+<div class="card-group p-3" >
+  <div class="card" *ngFor="let item of mediaList">
+    <img src="{{item.pictureUrl}}" class="m-2" alt="..." width="200px">
+    <div class="card-body">
+      <h5 class="card-title">{{item.mediaTitle}}</h5>
+      <p class="card-text"><button class="btn btn-warning" (click)="addTowatchList(item.mediaId)">რჩეულებში დამატება</button></p>
+
+    </div>
+  </div>
+
+</div>
+
